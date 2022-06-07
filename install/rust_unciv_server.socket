@@ -1,0 +1,10 @@
+[Unit]
+Description=Socket for rust_unciv_server
+
+[Socket]
+ListenStream=/run/rust_unciv_server.sock
+SocketMode=0660
+SocketGroup=http
+
+[Install]
+WantedBy=sockets.target

@@ -1,0 +1,34 @@
+[Unit]
+Description=Simple Unciv multiplayer server
+Documentation=https://github.com/oynqr/rust_unciv_server
+Wants=network.target
+
+[Service]
+DynamicUser=yes
+CapabilityBoundingSet=
+ExecStart=/usr/local/bin/rust_unciv_server
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+PrivateDevices=yes
+PrivateNetwork=yes
+PrivateUsers=yes
+ProcSubset=pid
+ProtectClock=yes
+ProtectControlGroups=yes
+ProtectHome=yes
+ProtectHostname=yes
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+ProtectProc=noaccess
+UMask=0177
+RestrictAddressFamilies=none
+RestrictNamespaces=yes
+RestrictRealtime=yes
+StateDirectory=rust_unciv_server
+SystemCallArchitectures=native
+SystemCallFilter=@basic-io @file-system @io-event @network-io @process @signal @timer
+WorkingDirectory=/var/lib/rust_unciv_server
+
+[Install]
+WantedBy=multi-user.target

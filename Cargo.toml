@@ -1,0 +1,29 @@
+[package]
+name = "rust_unciv_server"
+description = "Simple Unciv multiplayer server"
+version = "0.1.0"
+authors = ["Philipp David <pd@3b.pm>"]
+repository = "https://github.com/oynqr/rust_unciv_server"
+license = "AGPL-3.0-only"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.57"
+async-fs = "1.5.0"
+clap = { version = "3.1.18", default-features = false, features = ["derive", "std"] }
+env_logger = { version = "0.9.0", default-features = false }
+futures-lite = "1.12.0"
+log = "0.4.17"
+trillium = { git = "https://github.com/oynqr/trillium" }
+trillium-forwarding = { git = "https://github.com/oynqr/trillium" }
+trillium-logger = { git = "https://github.com/oynqr/trillium" }
+trillium-router = { git = "https://github.com/oynqr/trillium" }
+trillium-smol = { git = "https://github.com/oynqr/trillium" }
+trillium-static = { git = "https://github.com/oynqr/trillium", features = ["smol"] }
+
+[profile.release]
+lto = true
+opt-level = 3
+codegen-units = 1
+panic = "abort"
+strip = true

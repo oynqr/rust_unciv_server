@@ -1,0 +1,67 @@
+name: Release build
+
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ "aarch64-unknown-linux-musl", "armv7-unknown-linux-musleabihf", "arm-unknown-linux-musleabihf", "x86_64-unknown-linux-musl" ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          profile: minimal
+          default: true
+          override: true
+          target: ${{ matrix.target }}
+          components: rustfmt, clippy
+      - uses: actions-rs/cargo@v1
+        name: Check format
+        with:
+          use-cross: true
+          command: fmt
+          args: --all -- --check
+      - uses: actions-rs/cargo@v1
+        name: Run clippy
+        with:
+          command: clippy
+          use-cross: true
+          args: --all-targets --locked --target ${{matrix.target}} -- -D warnings
+      - uses: actions-rs/cargo@v1
+        name: Run clippy (All features)
+        with:
+          command: clippy
+          use-cross: true
+          args:  --locked --all-features --target ${{matrix.target}} -- -D warnings
+      - uses: actions-rs/cargo@v1
+        name: Run tests
+        with:
+          command: test
+          use-cross: true
+          args: --target ${{matrix.target}}
+      - uses: actions-rs/cargo@v1
+        name: Build
+        with:
+          command: build
+          use-cross: true
+          args: --release --all-features --target ${{matrix.target}}
+      - name: Create tar
+        run: |
+          mkdir assets
+          FILENAME=rust_unciv_server-${{github.event.release.tag_name}}-${{matrix.target}}
+          mv target/${{matrix.target}}/release/rust_unciv_server assets
+          cd assets
+          tar --format=ustar -czf $FILENAME.tar.gz rust_unciv_server
+          rm rust_unciv_server
+          ls .
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rust_unciv_server-${{matrix.target}}.tar.gz
+          path: assets/rust_unciv_server-${{github.event.release.tag_name}}-${{matrix.target}}.tar.gz
