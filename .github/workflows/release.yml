@@ -60,8 +60,7 @@ jobs:
           tar --format=ustar -czf $FILENAME.tar.gz rust_unciv_server
           rm rust_unciv_server
           ls .
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: rust_unciv_server-${{matrix.target}}.tar.gz
-          path: assets/rust_unciv_server-${{github.event.release.tag_name}}-${{matrix.target}}.tar.gz
+          files: assets/*
