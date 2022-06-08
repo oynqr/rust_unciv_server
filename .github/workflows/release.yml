@@ -29,13 +29,12 @@ jobs:
           default: true
           override: true
           target: ${{ matrix.target }}
-          components: rust-src
       - uses: actions-rs/cargo@v1
         name: Build
         with:
           command: build
           use-cross: true
-          args: -Z build-std=std,panic_abort --release --target ${{matrix.target}}
+          args: --release --target ${{matrix.target}}
       - name: Create tar
         run: |
           mkdir assets
