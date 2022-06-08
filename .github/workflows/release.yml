@@ -9,7 +9,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [ "aarch64-unknown-linux-musl", "armv7-unknown-linux-musleabihf", "arm-unknown-linux-musleabihf", "x86_64-unknown-linux-musl" ]
+        target:
+          [
+            "aarch64-unknown-linux-musl",
+            "arm-unknown-linux-musleabihf",
+            "armv7-unknown-linux-musleabihf",
+            "x86_64-pc-windows-gnu",
+            "x86_64-unknown-freebsd",
+            "x86_64-unknown-linux-musl",
+            "x86_64-unknown-netbsd",
+          ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -31,10 +40,12 @@ jobs:
         run: |
           mkdir assets
           FILENAME=rust_unciv_server-${{github.event.release.tag_name}}-${{matrix.target}}
-          mv target/${{matrix.target}}/release/rust_unciv_server assets
+          shopt -s extglob
+          mv target/${{matrix.target}}/release/rust_unciv_server?(.exe) assets
           cd assets
-          tar --format=ustar -cf $FILENAME.tar rust_unciv_server
-          rm rust_unciv_server
+          tar --format=ustar -cf $FILENAME.tar rust_unciv_server?(.exe)
+          rm rust_unciv_server?(.exe)
+          shopt -u extglob
           zstd -19 $FILENAME.tar
       - name: Release
         uses: softprops/action-gh-release@v1
