@@ -658,6 +658,7 @@ dependencies = [
  "async-fs",
  "clap",
  "env_logger",
+ "fastrand",
  "futures-lite",
  "log",
  "trillium",

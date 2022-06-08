@@ -15,9 +15,9 @@
 #![forbid(unsafe_code)]
 
 use anyhow::{bail, Error};
-use async_fs::{remove_file, File};
+use async_fs::{remove_file, rename, File};
 use clap::Parser;
-use futures_lite::{future, io};
+use futures_lite::{future, io, stream::repeat_with, StreamExt};
 use log::Level;
 use std::{
     env::current_dir,
@@ -94,15 +94,37 @@ fn main() -> Result<(), Error> {
             .get("/files/*", trillium_static::files(working_directory))
             .put("/files/:file", |mut conn: Conn| async {
                 let path = conn_unwrap!(conn.param("file"), conn);
+                let mut tmp_path = None;
+                while tmp_path.is_none() {
+                    let rand: String = repeat_with(fastrand::alphanumeric)
+                        .take(16)
+                        .collect()
+                        .await;
+                    let path = working_directory.join([path, &rand].concat());
+                    if !path.exists() {
+                        tmp_path = Some(path)
+                    }
+                }
+                let tmp_path = conn_unwrap!(tmp_path, conn);
                 let path = working_directory.join(path);
                 let file = conn_try!(
-                    File::create(&path).await,
+                    File::create(&tmp_path).await,
                     conn.with_body("Failed to create file.")
                 );
                 conn_try!(
                     io::copy(conn.request_body().await, file).await,
                     conn.with_body("Failed to write request body.")
                 );
+                conn_try!(rename(&tmp_path, &path).await, {
+                    conn_try!(
+                        remove_file(&tmp_path).await,
+                        conn.with_body(
+                            "Failed to rename file. Failed to remove \
+                             temporary file."
+                        )
+                    );
+                    conn.with_body("Failed to rename file.")
+                });
                 conn.with_status(200)
             })
             .delete("/files/:file", |conn: Conn| async {
