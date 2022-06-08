@@ -33,9 +33,9 @@ jobs:
           FILENAME=rust_unciv_server-${{github.event.release.tag_name}}-${{matrix.target}}
           mv target/${{matrix.target}}/release/rust_unciv_server assets
           cd assets
-          tar --format=ustar -czf $FILENAME.tar.gz rust_unciv_server
+          tar --format=ustar -cf $FILENAME.tar rust_unciv_server
           rm rust_unciv_server
-          ls .
+          zstd -19 $FILENAME.tar
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
