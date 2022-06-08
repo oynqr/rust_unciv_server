@@ -46,7 +46,7 @@ jobs:
           tar --format=ustar -cf $FILENAME.tar rust_unciv_server?(.exe)
           rm rust_unciv_server?(.exe)
           shopt -u extglob
-          zstd -19 $FILENAME.tar
+          zstd -19 --rm $FILENAME.tar
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
