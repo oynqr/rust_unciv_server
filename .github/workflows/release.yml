@@ -26,7 +26,7 @@ jobs:
         with:
           command: build
           use-cross: true
-          args: --release --all-features --target ${{matrix.target}}
+          args: -Z build-std=std,panic_abort --release --target ${{matrix.target}}
       - name: Create tar
         run: |
           mkdir assets
