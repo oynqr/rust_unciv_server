@@ -1,2 +1,6 @@
 max_width = 80
 wrap_comments = true
+error_on_line_overflow = true
+error_on_unformatted = true
+format_strings = true
+hex_literal_case = "Lower"
