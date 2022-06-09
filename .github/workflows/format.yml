@@ -22,7 +22,7 @@ jobs:
           cargo fmt --all -- --check
       - name: Run clippy
         run: |
-          cargo clippy --all-targets --locked --target ${{matrix.target}} -- -D warnings
+          cargo clippy --all-targets --locked -- -D warnings
       - name: Run clippy (All features)
         run: |
-          cargo clippy --locked --all-features --target ${{matrix.target}} -- -D warnings
+          cargo clippy --locked --all-features -- -D warnings
