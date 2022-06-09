@@ -64,3 +64,8 @@ jobs:
       - name: Build
         run: |
           cross build ${{matrix.buildFlags}} --target ${{matrix.target}}
+      - name: Check if build succeeded
+        run: |
+          shopt -s extglob
+          [[ -x target/${{matrix.target}}/release/rust_unciv_server?(.exe) ]]
+          shopt -u extglob
