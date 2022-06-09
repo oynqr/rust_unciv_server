@@ -69,5 +69,7 @@ jobs:
       - name: Check if build succeeded
         run: |
           shopt -s extglob
-          [[ -x target/${{matrix.target}}/release/rust_unciv_server?(.exe) ]]
+          if [[ ! -x target/${{matrix.target}}/release/rust_unciv_server?(.exe) ]]; then
+          exit 1
+          fi
           shopt -u extglob
