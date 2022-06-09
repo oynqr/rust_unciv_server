@@ -61,14 +61,14 @@ jobs:
       - name: Create tar
         run: |
           mkdir assets
-          FILENAME=rust_unciv_server-${{github.event.release.tag_name}}-${{matrix.target}}
+          FILENAME=rust_unciv_server-${{matrix.target}}.tar
           shopt -s extglob
           mv target/${{matrix.target}}/release/rust_unciv_server?(.exe) assets
           cd assets
-          tar --format=ustar -cf $FILENAME.tar rust_unciv_server?(.exe)
+          tar --format=ustar -cf $FILENAME rust_unciv_server?(.exe)
           rm rust_unciv_server?(.exe)
           shopt -u extglob
-          zstd -19 --rm $FILENAME.tar
+          zstd -19 --rm $FILENAME
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
