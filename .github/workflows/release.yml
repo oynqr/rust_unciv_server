@@ -28,7 +28,7 @@ jobs:
             "x86_64-unknown-linux-musl",
             "x86_64-unknown-netbsd",
           ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
