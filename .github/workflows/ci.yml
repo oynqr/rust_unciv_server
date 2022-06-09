@@ -44,16 +44,23 @@ jobs:
             "x86_64-unknown-linux-musl",
             "x86_64-unknown-netbsd",
           ]
-    runs-on: ubuntu-22.04
+        include:
+          - runner: "ubuntu-22.04"
+          - toolchain: "stable"
+          - buildFlags: "--release"
+          - target: "x86_64-unknown-dragonfly"
+            toolchain: "nightly"
+            buildFlags: "-Z build-std=std,panic_abort --release"
+
+    runs-on: ${{matrix.runner}}
     steps:
       - uses: actions/checkout@v3
       - name: Setup rust
         run: |
-          rm /home/runner/.cargo/bin/{rustfmt,cargo-fmt}
           rustup set profile minimal
-          rustup toolchain install nightly
-          rustup default nightly
+          rustup toolchain install ${{matrix.toolchain}}
+          rustup default ${{matrix.toolchain}}
           cargo install cross --git https://github.com/cross-rs/cross
       - name: Build
         run: |
-          cross build -Z build-std=std,panic_abort --release --target ${{matrix.target}}
+          cross build ${{matrix.buildFlags}} --target ${{matrix.target}}
