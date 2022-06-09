@@ -64,7 +64,7 @@ jobs:
       - name: Install cross toolchain on macOS
         if: runner.os == 'macOS'
         run: |
-          rustup target add ${{matrix.toolchain}}
+          rustup target add ${{matrix.target}}
       - name: Build
         run: |
           cross build ${{matrix.buildFlags}} --target ${{matrix.target}}
