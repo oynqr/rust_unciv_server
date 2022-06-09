@@ -55,7 +55,6 @@ jobs:
           rustup set profile minimal
           rustup toolchain install nightly --component rustfmt,clippy
           rustup default nightly
-          rustup target add ${{matrix.target}}
           cargo install cross --git https://github.com/cross-rs/cross
       - name: Check format
         run: |
