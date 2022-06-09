@@ -14,6 +14,7 @@ jobs:
       matrix:
         target:
           [
+            "aarch64-apple-darwin",
             "aarch64-linux-android",
             "aarch64-unknown-linux-musl",
             "arm-unknown-linux-musleabi",
@@ -35,6 +36,7 @@ jobs:
             "riscv64gc-unknown-linux-gnu",
             "s390x-unknown-linux-gnu",
             "sparc64-unknown-linux-gnu",
+            "x86_64-apple-darwin",
             "x86_64-linux-android",
             "x86_64-pc-windows-gnu",
             "x86_64-unknown-dragonfly",
@@ -46,6 +48,10 @@ jobs:
           - runner: "ubuntu-22.04"
           - toolchain: "stable"
           - buildFlags: "--release"
+          - target: "aarch64-apple-darwin"
+            runner: "macos-12"
+          - target: "x86_64-apple-darwin"
+            runner: "macos-12"
           - target: "x86_64-unknown-dragonfly"
             toolchain: "nightly"
             buildFlags: "-Z build-std=std,panic_abort --release"
