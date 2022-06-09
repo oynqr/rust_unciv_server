@@ -35,35 +35,22 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@master
-        with:
-          toolchain: nightly
-          profile: minimal
-          default: true
-          override: true
-          target: ${{ matrix.target }}
-          components: rustfmt, clippy
-      - uses: actions-rs/cargo@master
-        name: Check format
-        with:
-          command: fmt
-          use-cross: true
-          args: --all -- --check
-      - uses: actions-rs/cargo@master
-        name: Run clippy
-        with:
-          command: clippy
-          use-cross: true
-          args: --all-targets --locked --target ${{matrix.target}} -- -D warnings
-      - uses: actions-rs/cargo@master
-        name: Run clippy (All features)
-        with:
-          command: clippy
-          use-cross: true
-          args: --locked --all-features --target ${{matrix.target}} -- -D warnings
-      - uses: actions-rs/cargo@master
-        name: Build
-        with:
-          command: build
-          use-cross: true
-          args: --release --target ${{matrix.target}}
+      - name: Setup rust
+        run: |
+          rustup set profile minimal
+          rustup toolchain install nightly --component rustfmt,clippy
+          rustup default nightly
+          rustup target add ${{matrix.target}}
+          cargo install cross --git https://github.com/cross-rs/cross
+      - name: Check format
+        run: |
+          cargo fmt --all -- --check
+      - name: Run clippy
+        run: |
+          cross clippy --all-targets --locked --target ${{matrix.target}} -- -D warnings
+      - name: Run clippy (All features)
+        run: |
+          cross clippy --locked --all-features --target ${{matrix.target}} -- -D warnings
+      - name: Build
+        run: |
+          cross build --release --target ${{matrix.target}}
