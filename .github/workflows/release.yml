@@ -31,14 +31,14 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
+      - uses: actions-rs/toolchain@master
         with:
           toolchain: nightly
           profile: minimal
           default: true
           override: true
           target: ${{ matrix.target }}
-      - uses: actions-rs/cargo@v1
+      - uses: actions-rs/cargo@master
         name: Build
         with:
           command: build
