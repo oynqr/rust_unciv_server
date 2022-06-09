@@ -61,6 +61,10 @@ jobs:
           rustup toolchain install ${{matrix.toolchain}}
           rustup default ${{matrix.toolchain}}
           cargo install cross --git https://github.com/cross-rs/cross
+      - name: Install cross toolchain on macOS
+        if: runner.os == 'macOS'
+        run: |
+          rustup target add ${{matrix.toolchain}}
       - name: Build
         run: |
           cross build ${{matrix.buildFlags}} --target ${{matrix.target}}
