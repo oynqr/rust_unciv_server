@@ -52,4 +52,4 @@ jobs:
           cross clippy --locked --all-features --target ${{matrix.target}} -- -D warnings
       - name: Build
         run: |
-          cross build --release --target ${{matrix.target}}
+          cross build -Z build-std=std,panic_abort --release --target ${{matrix.target}}
