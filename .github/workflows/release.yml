@@ -32,19 +32,16 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@master
-        with:
-          toolchain: stable
-          profile: minimal
-          default: true
-          override: true
-          target: ${{ matrix.target }}
-      - uses: actions-rs/cargo@master
-        name: Build
-        with:
-          command: build
-          use-cross: true
-          args: --release --target ${{matrix.target}}
+      - name: Setup rust
+        run: |
+          rustup set profile minimal
+          rustup toolchain install nightly
+          rustup default nightly
+          rustup target add ${{matrix.target}}
+          cargo install cross --git https://github.com/cross-rs/cross
+      - name: Build
+        run: |
+          cross build --release --target ${{matrix.target}}
       - name: Create tar
         run: |
           mkdir assets
