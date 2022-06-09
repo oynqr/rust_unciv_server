@@ -51,18 +51,9 @@ jobs:
         run: |
           rm /home/runner/.cargo/bin/{rustfmt,cargo-fmt}
           rustup set profile minimal
-          rustup toolchain install nightly --component rustfmt,clippy
+          rustup toolchain install nightly
           rustup default nightly
           cargo install cross --git https://github.com/cross-rs/cross
-      - name: Check format
-        run: |
-          cargo fmt --all -- --check
-      - name: Run clippy
-        run: |
-          cross clippy --all-targets --locked --target ${{matrix.target}} -- -D warnings
-      - name: Run clippy (All features)
-        run: |
-          cross clippy --locked --all-features --target ${{matrix.target}} -- -D warnings
       - name: Build
         run: |
           cross build -Z build-std=std,panic_abort --release --target ${{matrix.target}}

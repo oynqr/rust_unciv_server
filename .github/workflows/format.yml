@@ -1,0 +1,28 @@
+name: Check format
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup rust
+        run: |
+          rm /home/runner/.cargo/bin/{rustfmt,cargo-fmt}
+          rustup set profile minimal
+          rustup toolchain install nightly --component rustfmt,clippy
+          rustup default nightly
+      - name: Check format
+        run: |
+          cargo fmt --all -- --check
+      - name: Run clippy
+        run: |
+          cargo clippy --all-targets --locked --target ${{matrix.target}} -- -D warnings
+      - name: Run clippy (All features)
+        run: |
+          cargo clippy --locked --all-features --target ${{matrix.target}} -- -D warnings
