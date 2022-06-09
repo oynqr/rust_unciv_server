@@ -6,11 +6,19 @@ implementation that is faster, smaller and safer than the original one.
 
 ## Running
 
-You can obtain binaries from the
-[releases](https://github.com/oynqr/rust_unciv_server/releases). These binaries
-are statically linked and have no additional dependencies. If there is no
-applicable build for your platform or architecture, or you simply wish to build
-the server yourself, refer to [Building](#building).
+You may obtain `x86_64` binaries for
+[Linux](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-unknown-linux-musl.tar.zst)
+and
+[Windows](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-pc-windows-gnu.tar.zst)
+at these links.
+
+If you need builds for different platforms or architectures, take a look at the
+[latest release](https://github.com/oynqr/rust_unciv_server/releases/latest).
+All Linux binaries are statically linked and require no userland dependencies,
+except those with a gnu suffix, which require a glibc installation.
+
+Should no applicable build be available for your platform or architecture, or
+you simply wish to build the server yourself, refer to [Building](#building).
 
 ## Configuration
 
