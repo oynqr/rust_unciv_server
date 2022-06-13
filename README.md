@@ -1,4 +1,4 @@
-# rust_unciv_server
+# rust\_unciv\_server
 
 `rust_unciv_server` is a simple multiplayer server for
 [Unciv](https://github.com/yairm210/Unciv). The aim is to create an
@@ -6,10 +6,14 @@ implementation that is faster, smaller and safer than the original one.
 
 ## Running
 
-You may obtain `x86_64` binaries for
-[Linux](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-unknown-linux-musl.tar.zst)
-and
-[Windows](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-pc-windows-gnu.tar.zst)
+You may obtain binaries for [Linux
+(x86\_64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-unknown-linux-musl.tar.zst),
+[macOS
+(x86\_64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-apple-darwin.tar.zst),
+[macOS
+(aarch64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-aarch64-apple-darwin.tar.zst)
+and [Windows
+(x86\_64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-pc-windows-gnu.tar.zst)
 at these links.
 
 If you need builds for different platforms or architectures, take a look at the
@@ -31,7 +35,7 @@ Here is an overview of available options:
 
 Environment variable | Command line flag | Description
 --- | --- | ---
-RUST_LOG | - | Log level used for the entire application
+RUST\_LOG | - | Log level used for the entire application
 HOST | -h | Address or unix socket to listen on, defaults to localhost
 PORT | -p | Port to listen on, defaults to 8080
 | - | -d | Save file directory to use, defaults to current working directory
