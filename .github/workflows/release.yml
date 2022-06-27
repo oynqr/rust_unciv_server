@@ -55,6 +55,25 @@ jobs:
     runs-on: ${{matrix.runner}}
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{runner.os}}-cargo-${{hashFiles('**/Cargo.lock')}}
+      - name: Install cargo tools
+        id: cargo-tools
+        run: |
+          cargo install rust-latest
+          cargo install cross --git https://github.com/cross-rs/cross
+          echo "::set-output name=rust-latest::$(rust-latest)"
+        shell: bash
+      - uses: actions/cache@v3
+        with:
+          path: ~/.rustup/
+          key: ${{matrix.target}}-rustup-${{steps.cargo-tools.outputs.rust-latest}}
       - name: Setup rust
         run: |
           rustup set profile minimal
