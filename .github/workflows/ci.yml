@@ -72,8 +72,8 @@ jobs:
       - name: Install cargo tools
         id: cargo-tools
         run: |
-          cargo install rust-latest
-          cargo install cross --git https://github.com/cross-rs/cross
+          cargo install rust-latest || echo rust-latest already installed
+          cargo install cross --git https://github.com/cross-rs/cross || echo cross already installed
           echo "::set-output name=rust-latest::$(rust-latest)"
         shell: bash
       - uses: actions/cache@v3
