@@ -57,12 +57,34 @@ jobs:
     runs-on: ${{matrix.runner}}
     steps:
       - uses: actions/checkout@v3
-      - name: Setup rust
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{runner.os}}-cargo-${{hashFiles('**/Cargo.lock')}}
+      - uses: actions/cache@v3
+        with:
+          path: target/
+          key: ${{matrix.target}}-target-${{hashFiles('**/Cargo.lock')}}
+      - name: Install cargo tools
+        id: cargo-tools
+        run: |
+          cargo install rust-latest
+          cargo install cross --git https://github.com/cross-rs/cross
+          echo "::set-output name=rust-latest::$(rust-latest)"
+        shell: bash
+      - uses: actions/cache@v3
+        with:
+          path: ~/.rustup/
+          key: ${{matrix.target}}-rustup-${{steps.cargo-tools.outputs.rust-latest}}
+      - name: Setup rust toolchain
         run: |
           rustup set profile minimal
           rustup toolchain install ${{matrix.toolchain}}
           rustup default ${{matrix.toolchain}}
-          cargo install cross --git https://github.com/cross-rs/cross
       - name: Install cross toolchain on macOS
         if: runner.os == 'macOS'
         run: |
