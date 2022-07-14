@@ -30,7 +30,7 @@ pub fn default_handler(working_directory: &'static Path) -> impl Handler {
             .with_target(Target::Logger(Level::Info)),
         Forwarding::trust_always(),
         Router::new()
-            .get("/isalive", |conn: Conn| async { conn.ok("true") })
+            .get("/isalive", "true")
             .get("/files/*", trillium_static::files(working_directory))
             .put("/files/:file", |mut conn: Conn| async {
                 let path = conn_unwrap!(conn.param("file"), conn);
