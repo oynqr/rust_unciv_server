@@ -17,13 +17,14 @@ use std::path::Path;
 
 use futures_lite::{io, stream::repeat_with, StreamExt};
 use log::Level;
-use trillium::{conn_try, conn_unwrap, Conn, Handler};
+use trillium::{conn_try, conn_unwrap, Conn, Handler, State};
 use trillium_forwarding::Forwarding;
 use trillium_logger::{apache_common, ColorMode, Logger, Target};
 use trillium_router::{Router, RouterConnExt};
 
 pub fn default_handler(working_directory: &'static Path) -> impl Handler {
     (
+        State::new(working_directory),
         Logger::new()
             .with_formatter(apache_common("-", "-"))
             .with_color_mode(ColorMode::Off)
@@ -40,13 +41,16 @@ pub fn default_handler(working_directory: &'static Path) -> impl Handler {
                         .take(16)
                         .collect()
                         .await;
-                    let path = working_directory.join([path, &rand].concat());
+                    let path = conn
+                        .state::<&'static Path>()
+                        .unwrap()
+                        .join([path, &rand].concat());
                     if !path.exists() {
                         tmp_path = Some(path)
                     }
                 }
                 let tmp_path = conn_unwrap!(tmp_path, conn);
-                let path = working_directory.join(path);
+                let path = conn.state::<&'static Path>().unwrap().join(path);
                 let file = conn_try!(
                     File::create(&tmp_path).await,
                     conn.with_body("Failed to create file.")
@@ -69,7 +73,7 @@ pub fn default_handler(working_directory: &'static Path) -> impl Handler {
             })
             .delete("/files/:file", |conn: Conn| async {
                 let path = conn_unwrap!(conn.param("file"), conn);
-                let path = working_directory.join(path);
+                let path = conn.state::<&'static Path>().unwrap().join(path);
                 if !path.is_file() {
                     return conn;
                 }
