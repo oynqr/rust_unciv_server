@@ -14,19 +14,17 @@
 
 #![forbid(unsafe_code)]
 
+mod app;
+
 use anyhow::{bail, Error};
-use async_fs::{remove_file, rename, File};
+use app::default_handler;
+use async_fs::{remove_file, File};
 use clap::Parser;
-use futures_lite::{future, io, stream::repeat_with, StreamExt};
-use log::Level;
+use futures_lite::future;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
 };
-use trillium::{conn_try, conn_unwrap, Conn};
-use trillium_forwarding::Forwarding;
-use trillium_logger::{apache_common, ColorMode, Logger, Target};
-use trillium_router::{Router, RouterConnExt};
 
 fn pathbuf_to_static_path(buf: PathBuf) -> &'static Path {
     Box::leak(buf.into_boxed_path())
@@ -83,59 +81,6 @@ fn main() -> Result<(), Error> {
         trillium = trillium.with_host(&host);
     }
 
-    trillium.run((
-        Logger::new()
-            .with_formatter(apache_common("-", "-"))
-            .with_color_mode(ColorMode::Off)
-            .with_target(Target::Logger(Level::Info)),
-        Forwarding::trust_always(),
-        Router::new()
-            .get("/isalive", |conn: Conn| async { conn.ok("true") })
-            .get("/files/*", trillium_static::files(working_directory))
-            .put("/files/:file", |mut conn: Conn| async {
-                let path = conn_unwrap!(conn.param("file"), conn);
-                let mut tmp_path = None;
-                while tmp_path.is_none() {
-                    let rand: String = repeat_with(fastrand::alphanumeric)
-                        .take(16)
-                        .collect()
-                        .await;
-                    let path = working_directory.join([path, &rand].concat());
-                    if !path.exists() {
-                        tmp_path = Some(path)
-                    }
-                }
-                let tmp_path = conn_unwrap!(tmp_path, conn);
-                let path = working_directory.join(path);
-                let file = conn_try!(
-                    File::create(&tmp_path).await,
-                    conn.with_body("Failed to create file.")
-                );
-                conn_try!(
-                    io::copy(conn.request_body().await, file).await,
-                    conn.with_body("Failed to write request body.")
-                );
-                conn_try!(rename(&tmp_path, &path).await, {
-                    conn_try!(
-                        remove_file(&tmp_path).await,
-                        conn.with_body(
-                            "Failed to rename file. Failed to remove \
-                             temporary file."
-                        )
-                    );
-                    conn.with_body("Failed to rename file.")
-                });
-                conn.with_status(200)
-            })
-            .delete("/files/:file", |conn: Conn| async {
-                let path = conn_unwrap!(conn.param("file"), conn);
-                let path = working_directory.join(path);
-                if !path.is_file() {
-                    return conn;
-                }
-                conn_try!(remove_file(&path).await, conn);
-                conn.with_status(200)
-            }),
-    ));
+    trillium.run(default_handler(working_directory));
     Ok(())
 }
