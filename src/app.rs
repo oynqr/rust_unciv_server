@@ -58,6 +58,16 @@ async fn upload_handler(mut conn: Conn) -> Conn {
     conn.with_status(200)
 }
 
+async fn delete_handler(conn: Conn) -> Conn {
+    let path = conn_unwrap!(conn.param("file"), conn);
+    let path = conn.state::<&'static Path>().unwrap().join(path);
+    if !path.is_file() {
+        return conn;
+    }
+    conn_try!(remove_file(&path).await, conn);
+    conn.with_status(200)
+}
+
 pub fn default_handler(working_directory: &'static Path) -> impl Handler {
     (
         State::new(working_directory),
@@ -70,14 +80,6 @@ pub fn default_handler(working_directory: &'static Path) -> impl Handler {
             .get("/isalive", "true")
             .get("/files/*", trillium_static::files(working_directory))
             .put("/files/:file", upload_handler)
-            .delete("/files/:file", |conn: Conn| async {
-                let path = conn_unwrap!(conn.param("file"), conn);
-                let path = conn.state::<&'static Path>().unwrap().join(path);
-                if !path.is_file() {
-                    return conn;
-                }
-                conn_try!(remove_file(&path).await, conn);
-                conn.with_status(200)
-            }),
+            .delete("/files/:file", delete_handler),
     )
 }
