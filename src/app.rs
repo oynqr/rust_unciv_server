@@ -22,6 +22,42 @@ use trillium_forwarding::Forwarding;
 use trillium_logger::{apache_common, ColorMode, Logger, Target};
 use trillium_router::{Router, RouterConnExt};
 
+async fn upload_handler(mut conn: Conn) -> Conn {
+    let path = conn_unwrap!(conn.param("file"), conn);
+    let mut tmp_path = None;
+    while tmp_path.is_none() {
+        let rand: String =
+            repeat_with(fastrand::alphanumeric).take(16).collect().await;
+        let path = conn
+            .state::<&'static Path>()
+            .unwrap()
+            .join([path, &rand].concat());
+        if !path.exists() {
+            tmp_path = Some(path)
+        }
+    }
+    let tmp_path = conn_unwrap!(tmp_path, conn);
+    let path = conn.state::<&'static Path>().unwrap().join(path);
+    let file = conn_try!(
+        File::create(&tmp_path).await,
+        conn.with_body("Failed to create file.")
+    );
+    conn_try!(
+        io::copy(conn.request_body().await, file).await,
+        conn.with_body("Failed to write request body.")
+    );
+    conn_try!(rename(&tmp_path, &path).await, {
+        conn_try!(
+            remove_file(&tmp_path).await,
+            conn.with_body(
+                "Failed to rename file. Failed to remove temporary file."
+            )
+        );
+        conn.with_body("Failed to rename file.")
+    });
+    conn.with_status(200)
+}
+
 pub fn default_handler(working_directory: &'static Path) -> impl Handler {
     (
         State::new(working_directory),
@@ -33,44 +69,7 @@ pub fn default_handler(working_directory: &'static Path) -> impl Handler {
         Router::new()
             .get("/isalive", "true")
             .get("/files/*", trillium_static::files(working_directory))
-            .put("/files/:file", |mut conn: Conn| async {
-                let path = conn_unwrap!(conn.param("file"), conn);
-                let mut tmp_path = None;
-                while tmp_path.is_none() {
-                    let rand: String = repeat_with(fastrand::alphanumeric)
-                        .take(16)
-                        .collect()
-                        .await;
-                    let path = conn
-                        .state::<&'static Path>()
-                        .unwrap()
-                        .join([path, &rand].concat());
-                    if !path.exists() {
-                        tmp_path = Some(path)
-                    }
-                }
-                let tmp_path = conn_unwrap!(tmp_path, conn);
-                let path = conn.state::<&'static Path>().unwrap().join(path);
-                let file = conn_try!(
-                    File::create(&tmp_path).await,
-                    conn.with_body("Failed to create file.")
-                );
-                conn_try!(
-                    io::copy(conn.request_body().await, file).await,
-                    conn.with_body("Failed to write request body.")
-                );
-                conn_try!(rename(&tmp_path, &path).await, {
-                    conn_try!(
-                        remove_file(&tmp_path).await,
-                        conn.with_body(
-                            "Failed to rename file. Failed to remove \
-                             temporary file."
-                        )
-                    );
-                    conn.with_body("Failed to rename file.")
-                });
-                conn.with_status(200)
-            })
+            .put("/files/:file", upload_handler)
             .delete("/files/:file", |conn: Conn| async {
                 let path = conn_unwrap!(conn.param("file"), conn);
                 let path = conn.state::<&'static Path>().unwrap().join(path);
