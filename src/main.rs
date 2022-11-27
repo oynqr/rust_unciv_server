@@ -17,6 +17,9 @@
 mod app;
 mod cmd;
 
+#[cfg(test)]
+mod tests;
+
 use anyhow::{bail, Error};
 use app::default_handler;
 use async_fs::{remove_file, File};
