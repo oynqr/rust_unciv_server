@@ -10,7 +10,14 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.58"
 async-fs = "1.5.0"
-clap = { version = "3.2.11", default-features = false, features = ["derive", "std"] }
+clap = { version = "4.0.27", default-features = false, features = [
+    "derive",
+    "std",
+    "help",
+    "usage",
+    "error-context",
+    "wrap_help",
+] }
 env_logger = { version = "0.10.0", default-features = false }
 fastrand = "1.7.0"
 futures-lite = "1.12.0"
@@ -20,7 +27,9 @@ trillium-forwarding = { git = "https://github.com/oynqr/trillium" }
 trillium-logger = { git = "https://github.com/oynqr/trillium" }
 trillium-router = { git = "https://github.com/oynqr/trillium" }
 trillium-smol = { git = "https://github.com/oynqr/trillium" }
-trillium-static = { git = "https://github.com/oynqr/trillium", features = ["smol"] }
+trillium-static = { git = "https://github.com/oynqr/trillium", features = [
+    "smol",
+] }
 
 [profile.release]
 lto = true

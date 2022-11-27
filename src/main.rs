@@ -19,7 +19,7 @@ mod app;
 use anyhow::{bail, Error};
 use app::default_handler;
 use async_fs::{remove_file, File};
-use clap::Parser;
+use clap::{ArgAction, Parser};
 use futures_lite::future;
 use std::{
     env::current_dir,
@@ -32,19 +32,23 @@ fn pathbuf_to_static_path(buf: PathBuf) -> &'static Path {
 
 /// Simple Unciv multiplayer server
 #[derive(Parser)]
-#[clap(author, version, about, long_about = None)]
+#[command(author, version, about, long_about = None, disable_help_flag = true)]
 struct Args {
     /// Port to listen on
-    #[clap(short, long)]
+    #[arg(short, long)]
     port: Option<u16>,
 
     /// Hostname or socket to listen on
-    #[clap(short, long)]
+    #[arg(short, long)]
     host: Option<String>,
 
     /// Save file directory to use
-    #[clap(short, long = "dir")]
+    #[arg(short, long = "dir")]
     directory: Option<PathBuf>,
+
+    /// Print help information
+    #[arg(long, global = true, action = ArgAction::Help)]
+    help: Option<bool>,
 }
 
 fn main() -> Result<(), Error> {
