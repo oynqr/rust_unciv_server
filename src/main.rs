@@ -15,11 +15,13 @@
 #![forbid(unsafe_code)]
 
 mod app;
+mod cmd;
 
 use anyhow::{bail, Error};
 use app::default_handler;
 use async_fs::{remove_file, File};
-use clap::{ArgAction, Parser};
+use clap::Parser;
+use cmd::Args;
 use futures_lite::future;
 use std::{
     env::current_dir,
@@ -28,27 +30,6 @@ use std::{
 
 fn pathbuf_to_static_path(buf: PathBuf) -> &'static Path {
     Box::leak(buf.into_boxed_path())
-}
-
-/// Simple Unciv multiplayer server
-#[derive(Parser)]
-#[command(author, version, about, long_about = None, disable_help_flag = true)]
-struct Args {
-    /// Port to listen on
-    #[arg(short, long)]
-    port: Option<u16>,
-
-    /// Hostname or socket to listen on
-    #[arg(short, long)]
-    host: Option<String>,
-
-    /// Save file directory to use
-    #[arg(short, long = "dir")]
-    directory: Option<PathBuf>,
-
-    /// Print help information
-    #[arg(long, global = true, action = ArgAction::Help)]
-    help: Option<bool>,
 }
 
 fn main() -> Result<(), Error> {
