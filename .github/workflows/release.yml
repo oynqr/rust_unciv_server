@@ -79,7 +79,7 @@ jobs:
           rustup set profile minimal
           rustup toolchain install ${{matrix.toolchain}}
           rustup default ${{matrix.toolchain}}
-          cargo install cross --git https://github.com/cross-rs/cross
+          cargo install cross --git https://github.com/cross-rs/cross || echo cross already installed
       - name: Install cross toolchain on macOS
         if: runner.os == 'macOS'
         run: |
