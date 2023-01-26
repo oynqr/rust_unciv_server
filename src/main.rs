@@ -16,6 +16,7 @@
 
 mod app;
 mod cmd;
+mod common;
 
 #[cfg(test)]
 mod tests;
@@ -25,6 +26,7 @@ use app::default_handler;
 use async_fs::{remove_file, File};
 use clap::Parser;
 use cmd::Args;
+use common::get_unique_path;
 use futures_lite::future;
 use std::{
     env::current_dir,
@@ -53,8 +55,9 @@ fn main() -> Result<(), Error> {
 
     let working_directory =
         pathbuf_to_static_path(working_directory.canonicalize()?);
-    let testfile_path = working_directory.join("test");
+
     future::block_on(async move {
+        let testfile_path = get_unique_path("test", working_directory).await;
         File::create(&testfile_path).await?;
         remove_file(&testfile_path).await
     })?;

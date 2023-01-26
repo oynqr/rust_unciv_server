@@ -15,28 +15,19 @@
 use async_fs::{remove_file, rename, File};
 use std::path::Path;
 
-use futures_lite::{io, stream::repeat_with, StreamExt};
+use futures_lite::io;
 use log::Level;
 use trillium::{conn_try, conn_unwrap, Conn, Handler, State};
 use trillium_forwarding::Forwarding;
 use trillium_logger::{apache_common, ColorMode, Logger, Target};
 use trillium_router::{Router, RouterConnExt};
 
+use crate::common::get_unique_path;
+
 async fn upload_handler(mut conn: Conn) -> Conn {
     let path = conn_unwrap!(conn.param("file"), conn);
-    let mut tmp_path = None;
-    while tmp_path.is_none() {
-        let rand: String =
-            repeat_with(fastrand::alphanumeric).take(16).collect().await;
-        let path = conn
-            .state::<&'static Path>()
-            .unwrap()
-            .join([path, &rand].concat());
-        if !path.exists() {
-            tmp_path = Some(path)
-        }
-    }
-    let tmp_path = conn_unwrap!(tmp_path, conn);
+    let tmp_path =
+        get_unique_path(path, conn.state::<&'static Path>().unwrap()).await;
     let path = conn.state::<&'static Path>().unwrap().join(path);
     let file = conn_try!(
         File::create(&tmp_path).await,
