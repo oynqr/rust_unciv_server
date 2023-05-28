@@ -27,7 +27,8 @@ RestrictNamespaces=yes
 RestrictRealtime=yes
 StateDirectory=rust_unciv_server
 SystemCallArchitectures=native
-SystemCallFilter=@basic-io @file-system @io-event @network-io @process @signal @timer
+SystemCallFilter=@basic-io @file-system @io-event @network-io @process @signal\
+                 @timer ioctl
 WorkingDirectory=/var/lib/rust_unciv_server
 
 [Install]
