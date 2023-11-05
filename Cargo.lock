@@ -685,7 +685,7 @@ dependencies = [
 
 [[package]]
 name = "rust_unciv_server"
-version = "0.1.7"
+version = "0.1.11"
 dependencies = [
  "anyhow",
  "async-fs",
