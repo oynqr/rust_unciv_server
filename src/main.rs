@@ -17,6 +17,7 @@
 mod app;
 mod cmd;
 mod common;
+mod listener;
 
 #[cfg(test)]
 mod tests;
@@ -28,7 +29,7 @@ use clap::Parser;
 use cmd::Args;
 use common::get_unique_path;
 use futures_lite::future;
-use listenfd::ListenFd;
+use listener::get_prebound_listener;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -64,26 +65,17 @@ fn main() -> Result<(), Error> {
     })?;
 
     let mut trillium = trillium_smol::config();
-    let mut listenfd = ListenFd::from_env();
 
-    if let Some(listener) = listenfd
-        .take_unix_listener(0)
-        .ok()
-        .flatten()
-        .and_then(|std_listener| {
-            async_net::unix::UnixListener::try_from(std_listener).ok()
-        })
-    {
-        trillium = trillium.with_prebound_server(listener);
-    } else if let Some(listener) = listenfd
-        .take_tcp_listener(0)
-        .ok()
-        .flatten()
-        .and_then(|std_listener| {
-            async_net::TcpListener::try_from(std_listener).ok()
-        })
-    {
-        trillium = trillium.with_prebound_server(listener);
+    if let Some(prebound_listener) = get_prebound_listener() {
+        trillium = match prebound_listener {
+            listener::Listener::TcpListener(tcp_listener) => {
+                trillium.with_prebound_server(tcp_listener)
+            }
+            #[cfg(unix)]
+            listener::Listener::UnixListener(unix_listener) => {
+                trillium.with_prebound_server(unix_listener)
+            }
+        }
     } else {
         if let Some(port) = args.port {
             trillium = trillium.with_port(port);
