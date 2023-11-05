@@ -26,6 +26,6 @@ pub fn get_prebound_listener() -> Option<Listener> {
         .and_then(|std_listener| {
             async_net::TcpListener::try_from(std_listener)
                 .ok()
-                .and_then(|listener| Some(Listener::TcpListener(listener)))
+                .map(|listener| Listener::TcpListener(listener))
         })
 }
