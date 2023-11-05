@@ -26,8 +26,6 @@ jobs:
             "i686-pc-windows-gnu",
             "i686-unknown-freebsd",
             "i686-unknown-linux-musl",
-            "mips64el-unknown-linux-gnuabi64",
-            "mips64-unknown-linux-gnuabi64",
             "mipsel-unknown-linux-musl",
             "mips-unknown-linux-musl",
             "powerpc64le-unknown-linux-gnu",
