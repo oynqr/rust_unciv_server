@@ -94,3 +94,6 @@ jobs:
           shopt -s extglob
           ls target/${{matrix.target}}/release/rust_unciv_server?(.exe)
           shopt -u extglob
+      - uses: actions/upload-artifact@v3
+        with:
+          path: target/${{matrix.target}}/release/rust_unciv_server????
