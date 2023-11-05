@@ -28,6 +28,7 @@ use clap::Parser;
 use cmd::Args;
 use common::get_unique_path;
 use futures_lite::future;
+use listenfd::ListenFd;
 use std::{
     env::current_dir,
     path::{Path, PathBuf},
@@ -63,13 +64,34 @@ fn main() -> Result<(), Error> {
     })?;
 
     let mut trillium = trillium_smol::config();
+    let mut listenfd = ListenFd::from_env();
 
-    if let Some(port) = args.port {
-        trillium = trillium.with_port(port);
-    }
+    if let Some(listener) = listenfd
+        .take_unix_listener(0)
+        .ok()
+        .flatten()
+        .and_then(|std_listener| {
+            async_net::unix::UnixListener::try_from(std_listener).ok()
+        })
+    {
+        trillium = trillium.with_prebound_server(listener);
+    } else if let Some(listener) = listenfd
+        .take_tcp_listener(0)
+        .ok()
+        .flatten()
+        .and_then(|std_listener| {
+            async_net::TcpListener::try_from(std_listener).ok()
+        })
+    {
+        trillium = trillium.with_prebound_server(listener);
+    } else {
+        if let Some(port) = args.port {
+            trillium = trillium.with_port(port);
+        }
 
-    if let Some(host) = args.host {
-        trillium = trillium.with_host(&host);
+        if let Some(host) = args.host {
+            trillium = trillium.with_host(&host);
+        }
     }
 
     trillium.run(default_handler(working_directory));

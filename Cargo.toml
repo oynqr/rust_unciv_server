@@ -9,7 +9,8 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.71"
-async-fs = "1.5.0"
+async-fs = "2.0.0"
+async-net = "2.0.0"
 clap = { version = "4.3.0", default-features = false, features = [
     "derive",
     "std",
@@ -19,15 +20,16 @@ clap = { version = "4.3.0", default-features = false, features = [
     "wrap_help",
 ] }
 env_logger = { version = "0.10.0", default-features = false }
-fastrand = "1.9.0"
-futures-lite = "1.13.0"
+fastrand = "2.0.1"
+futures-lite = "2.0.0"
+listenfd = "1.0.1"
 log = "0.4.17"
-trillium = { git = "https://github.com/oynqr/trillium" }
-trillium-forwarding = { git = "https://github.com/oynqr/trillium" }
-trillium-logger = { git = "https://github.com/oynqr/trillium" }
-trillium-router = { git = "https://github.com/oynqr/trillium" }
-trillium-smol = { git = "https://github.com/oynqr/trillium" }
-trillium-static = { git = "https://github.com/oynqr/trillium", features = [
+trillium = { git = "https://github.com/trillium-rs/trillium" }
+trillium-forwarding = { git = "https://github.com/trillium-rs/trillium" }
+trillium-logger = { git = "https://github.com/trillium-rs/trillium" }
+trillium-router = { git = "https://github.com/trillium-rs/trillium" }
+trillium-smol = { git = "https://github.com/trillium-rs/trillium" }
+trillium-static = { git = "https://github.com/trillium-rs/trillium", features = [
     "smol",
 ] }
 
