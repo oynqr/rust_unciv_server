@@ -33,6 +33,11 @@ trillium-static = { git = "https://github.com/trillium-rs/trillium", features = 
     "smol",
 ] }
 
+[patch.crates-io]
+signal-hook = { git = "https://github.com/oynqr/signal-hook.git" }
+signal-hook-registry = { git = "https://github.com/oynqr/signal-hook.git" }
+signal-hook-async-std = { git = "https://github.com/oynqr/signal-hook.git" }
+
 [profile.release]
 lto = true
 opt-level = 3
