@@ -34,6 +34,7 @@ trillium-static = { git = "https://github.com/trillium-rs/trillium", features = 
 ] }
 
 [patch.crates-io]
+colored = { git = "https://github.com/oynqr/colored.git" }
 signal-hook = { git = "https://github.com/oynqr/signal-hook.git" }
 signal-hook-registry = { git = "https://github.com/oynqr/signal-hook.git" }
 signal-hook-async-std = { git = "https://github.com/oynqr/signal-hook.git" }
