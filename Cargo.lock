@@ -87,9 +87,9 @@ dependencies = [
 
 [[package]]
 name = "async-io"
-version = "2.2.2"
+version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6afaa937395a620e33dc6a742c593c01aced20aa376ffb0f628121198578ccc7"
+checksum = "fb41eb19024a91746eba0773aa5e16036045bbf45733766661099e182ea6a744"
 dependencies = [
  "async-lock",
  "cfg-if",
@@ -106,9 +106,9 @@ dependencies = [
 
 [[package]]
 name = "async-lock"
-version = "3.2.0"
+version = "3.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7125e42787d53db9dd54261812ef17e937c95a51e4d291373b670342fa44310c"
+checksum = "d034b430882f8381900d3fe6f0aaa3ad94f2cb4ac519b429692a1bc2dda4ae7b"
 dependencies = [
  "event-listener",
  "event-listener-strategy",
@@ -163,9 +163,9 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 
 [[package]]
 name = "bitflags"
-version = "2.4.1"
+version = "2.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "327762f6e5a765692301e5bb513e0d9fef63be86bbc14528052b1cd3e6f03e07"
+checksum = "ed570934406eb16438a4e976b1b4500774099c13b8cb96eec99f620f05090ddf"
 
 [[package]]
 name = "blocking"
@@ -197,9 +197,9 @@ checksum = "8d18b093eba54c9aaa1e3784d4361eb2ba944cf7d0a932a830132238f483e8d8"
 
 [[package]]
 name = "clap"
-version = "4.4.13"
+version = "4.4.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "52bdc885e4cacc7f7c9eedc1ef6da641603180c783c41a15c264944deeaab642"
+checksum = "1e578d6ec4194633722ccf9544794b71b1385c3c027efe0c55db226fc880865c"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -207,9 +207,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.4.12"
+version = "4.4.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fb7fb5e4e979aec3be7791562fcba452f94ad85e954da024396433e0e25a79e9"
+checksum = "4df4df40ec50c46000231c914968278b1eb05098cf8f1b3a518a95030e71d1c7"
 dependencies = [
  "anstyle",
  "clap_lex",
@@ -278,9 +278,9 @@ dependencies = [
 
 [[package]]
 name = "env_logger"
-version = "0.10.1"
+version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95b3f3e67048839cb0d0781f445682a35113da7121f7c949db0e2be96a4fbece"
+checksum = "4cd405aab171cb85d6735e5c8d9db038c17d3ca007a4d2c25f337935c3d90580"
 dependencies = [
  "log",
 ]
@@ -424,9 +424,9 @@ checksum = "13e3bf6590cbc649f4d1a3eefc9d5d6eb746f5200ffb04e5e142700b8faa56e7"
 
 [[package]]
 name = "linux-raw-sys"
-version = "0.4.12"
+version = "0.4.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c4cd1a83af159aa67994778be9070f0ae1bd732942279cabb14f86f986a21456"
+checksum = "01cda141df6706de531b6c46c3a33ecca755538219bd484262fa09410c13539c"
 
 [[package]]
 name = "listenfd"
@@ -513,9 +513,9 @@ dependencies = [
 
 [[package]]
 name = "polling"
-version = "3.3.1"
+version = "3.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cf63fa624ab313c11656b4cda960bfc46c410187ad493c41f6ba2d8c1e991c9e"
+checksum = "545c980a3880efd47b2e262f6a4bb6daad6555cf3367aa9c4e52895f69537a41"
 dependencies = [
  "cfg-if",
  "concurrent-queue",
@@ -533,9 +533,9 @@ checksum = "439ee305def115ba05938db6eb1644ff94165c5ab5e9420d1c1bcedbba909391"
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.76"
+version = "1.0.78"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95fc56cda0b5c3325f5fbbd7ff9fda9e02bb00bb3dac51252d2f1bfa1cb8cc8c"
+checksum = "e2422ad645d89c99f8f3e6b88a9fdeca7fabeac836b1002371c4367c8f984aae"
 dependencies = [
  "unicode-ident",
 ]
@@ -597,9 +597,9 @@ dependencies = [
 
 [[package]]
 name = "rustix"
-version = "0.38.28"
+version = "0.38.30"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "72e572a5e8ca657d7366229cdde4bd14c4eb5499a9573d4d366fe1b599daa316"
+checksum = "322394588aaf33c24007e8bb3238ee3e4c5c09c084ab32bc73890b99ff326bca"
 dependencies = [
  "bitflags",
  "errno",
@@ -673,9 +673,9 @@ dependencies = [
 
 [[package]]
 name = "smallvec"
-version = "1.11.2"
+version = "1.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4dccd0940a2dcdf68d092b8cbab7dc0ad8fa938bf95787e1b916b0e3d0e8e970"
+checksum = "e6ecd384b10a64542d77071bd64bd7b231f4ed5940fba55e98c3de13824cf3d7"
 
 [[package]]
 name = "smartcow"
@@ -705,9 +705,9 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "stopper"
-version = "0.2.3"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "810ecf6a47020ea27b2cc949d2f1292b9759e8f2c4cebf71376520124417d9e6"
+checksum = "ed8bff52ab3d70adfb76df17a225936c7676efdda1a1567ed5b11c22e3577bd3"
 dependencies = [
  "event-listener",
  "futures-lite",
@@ -716,9 +716,9 @@ dependencies = [
 
 [[package]]
 name = "str-buf"
-version = "3.0.2"
+version = "3.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e75b72ee54e2f93c3ea1354066162be893ee5e25773ab743de3e088cecbb4f31"
+checksum = "0ceb97b7225c713c2fd4db0153cb6b3cab244eb37900c3f634ed4d43310d8c34"
 
 [[package]]
 name = "syn"
@@ -825,7 +825,7 @@ checksum = "c06d3da6113f116aaee68e4d601191614c9053067f9ab7f6edbcb161237daa54"
 [[package]]
 name = "trillium"
 version = "0.2.13"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "async-trait",
  "futures-lite",
@@ -836,7 +836,7 @@ dependencies = [
 [[package]]
 name = "trillium-forwarding"
 version = "0.2.3"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "cidr",
  "log",
@@ -845,8 +845,8 @@ dependencies = [
 
 [[package]]
 name = "trillium-http"
-version = "0.3.11"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+version = "0.3.12"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "encoding_rs",
  "futures-lite",
@@ -867,7 +867,7 @@ dependencies = [
 [[package]]
 name = "trillium-logger"
 version = "0.4.4"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "colored",
  "log",
@@ -879,7 +879,7 @@ dependencies = [
 [[package]]
 name = "trillium-macros"
 version = "0.0.5"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -889,7 +889,7 @@ dependencies = [
 [[package]]
 name = "trillium-router"
 version = "0.3.6"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "log",
  "routefinder",
@@ -899,7 +899,7 @@ dependencies = [
 [[package]]
 name = "trillium-server-common"
 version = "0.4.7"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "async-trait",
  "async_cell",
@@ -916,7 +916,7 @@ dependencies = [
 [[package]]
 name = "trillium-smol"
 version = "0.3.3"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "async-global-executor",
  "async-io",
@@ -935,7 +935,7 @@ dependencies = [
 [[package]]
 name = "trillium-static"
 version = "0.4.1"
-source = "git+https://github.com/trillium-rs/trillium#beed4eca4d06e6365c43b4dc9a9baa2d447c3ef8"
+source = "git+https://github.com/trillium-rs/trillium#d699058ce4c2471f4733a5aee867b2211ecd86a7"
 dependencies = [
  "async-fs",
  "cfg-if",
@@ -959,9 +959,9 @@ dependencies = [
 
 [[package]]
 name = "unicode-bidi"
-version = "0.3.14"
+version = "0.3.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f2528f27a9eb2b21e69c95319b30bd0efd85d09c379741b0f78ea1d86be2416"
+checksum = "08f95100a766bf4f8f28f90d77e0a5461bbdb219042e7679bebe79004fed8d75"
 
 [[package]]
 name = "unicode-ident"
@@ -991,9 +991,9 @@ dependencies = [
 
 [[package]]
 name = "uuid"
-version = "1.6.1"
+version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5e395fcf16a7a3d8127ec99782007af141946b4795001f876d54fb0d55978560"
+checksum = "f00cc9702ca12d3c81455259621e676d0f7251cec66a21e98fe2e9a37db93b2a"
 
 [[package]]
 name = "version_check"
