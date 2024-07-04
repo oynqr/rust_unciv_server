@@ -24,6 +24,7 @@ fastrand = "2.0.1"
 futures-lite = "2.0.0"
 listenfd = "1.0.1"
 log = "0.4.17"
+mimalloc = "0.1.43"
 trillium = { git = "https://github.com/trillium-rs/trillium" }
 trillium-forwarding = { git = "https://github.com/trillium-rs/trillium" }
 trillium-logger = { git = "https://github.com/trillium-rs/trillium" }
