@@ -14,10 +14,10 @@
 
 #![forbid(unsafe_code)]
 
-#[cfg(not(target_os = "windows"))]
+#[cfg(not(any(target_os = "windows", target_arch = "powerpc")))]
 use mimalloc::MiMalloc;
 
-#[cfg(not(target_os = "windows"))]
+#[cfg(not(any(target_os = "windows", target_arch = "powerpc")))]
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
 

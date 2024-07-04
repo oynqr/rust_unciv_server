@@ -33,7 +33,7 @@ trillium-static = { git = "https://github.com/trillium-rs/trillium", features = 
     "smol",
 ] }
 
-[target.'cfg(not(target_os = "windows"))'.dependencies]
+[target.'cfg(not(any(target_os = "windows", target_arch = "powerpc")))'.dependencies]
 mimalloc = "0.1.43"
 
 [patch.crates-io]
