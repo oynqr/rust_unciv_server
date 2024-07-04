@@ -46,7 +46,7 @@ jobs:
     runs-on: ${{matrix.runner}}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/bin/
@@ -54,7 +54,7 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
           key: ${{runner.os}}-cargo-${{hashFiles('**/Cargo.lock')}}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: target/
           key: ${{matrix.target}}-target-${{hashFiles('**/Cargo.lock')}}
@@ -65,7 +65,7 @@ jobs:
           cargo install cross --git https://github.com/cross-rs/cross || echo cross already installed
           echo "rust-latest=$(rust-latest)" >> $GITHUB_OUTPUT
         shell: bash
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.rustup/
           key: ${{matrix.target}}-rustup-${{steps.cargo-tools.outputs.rust-latest}}
