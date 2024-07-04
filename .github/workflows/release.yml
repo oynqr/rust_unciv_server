@@ -88,6 +88,6 @@ jobs:
           shopt -u extglob
           zstd -19 --rm $FILENAME
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: assets/*
