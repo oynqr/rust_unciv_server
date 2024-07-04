@@ -7,11 +7,7 @@ implementation that is faster, smaller and safer than the original one.
 ## Running
 
 You may obtain binaries for [Linux
-(x86\_64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-unknown-linux-musl.tar.zst),
-[macOS
-(x86\_64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-apple-darwin.tar.zst),
-[macOS
-(aarch64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-aarch64-apple-darwin.tar.zst)
+(x86\_64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-unknown-linux-musl.tar.zst)
 and [Windows
 (x86\_64)](https://github.com/oynqr/rust_unciv_server/releases/latest/download/rust_unciv_server-x86_64-pc-windows-gnu.tar.zst)
 at these links.
