@@ -5,7 +5,7 @@ version = "0.1.14"
 authors = ["Philipp David <pd@3b.pm>"]
 repository = "https://github.com/oynqr/rust_unciv_server"
 license = "AGPL-3.0-only"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 anyhow = "1.0.71"
