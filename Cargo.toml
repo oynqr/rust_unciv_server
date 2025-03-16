@@ -36,12 +36,6 @@ trillium-static = { git = "https://github.com/trillium-rs/trillium", features = 
 [target.'cfg(not(any(target_os = "windows", target_arch = "powerpc")))'.dependencies]
 mimalloc = "0.1.43"
 
-[patch.crates-io]
-colored = { git = "https://github.com/oynqr/colored.git" }
-signal-hook = { git = "https://github.com/oynqr/signal-hook.git" }
-signal-hook-registry = { git = "https://github.com/oynqr/signal-hook.git" }
-terminal_size = { git = "https://github.com/oynqr/terminal-size.git" }
-
 [profile.release]
 lto = true
 opt-level = 3
