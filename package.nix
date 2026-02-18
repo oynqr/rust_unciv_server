@@ -6,7 +6,7 @@ rustPlatform.buildRustPackage {
 
   src = ./.;
 
-  cargoHash = "sha256-1xhH4aX4wQueMqY7NFYxVp3I3iCZs9ORRov8p/5HcFo=";
+  cargoHash = "sha256-43oQErkjx82TuWI4Kh/9WR/RwMZX0K2g8QxpYD0jvvM=";
 
   meta = {
     changelog = "https://github.com/oynqr/rust_unciv_server/releases";
