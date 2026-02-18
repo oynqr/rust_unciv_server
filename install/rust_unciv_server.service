@@ -28,7 +28,7 @@ RestrictRealtime=yes
 StateDirectory=rust_unciv_server
 SystemCallArchitectures=native
 SystemCallFilter=@basic-io @file-system @io-event @network-io @process @signal\
-                 @timer ioctl madvise
+                 @timer ioctl madvise sysinfo
 WorkingDirectory=/var/lib/rust_unciv_server
 
 [Install]
