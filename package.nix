@@ -2,11 +2,11 @@
 
 rustPlatform.buildRustPackage {
   pname = "rust_unciv_server";
-  version = "0.1.15";
+  version = "0.1.16";
 
   src = ./.;
 
-  cargoHash = "sha256-43oQErkjx82TuWI4Kh/9WR/RwMZX0K2g8QxpYD0jvvM=";
+  cargoHash = "sha256-8TzwITgrjaQQoKJbLC/Igez03Sfb8x5ZJ0RxRRJq8jE=";
 
   meta = {
     changelog = "https://github.com/oynqr/rust_unciv_server/releases";
