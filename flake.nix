@@ -31,5 +31,9 @@
           };
         }
       );
+
+      packages = forAllSystems (pkgs: {
+        default = pkgs.callPackage ./package.nix { };
+      });
     };
 }
