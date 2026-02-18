@@ -14,7 +14,7 @@
 
 use std::path::{Path, PathBuf};
 
-use futures_lite::{stream::repeat_with, StreamExt};
+use futures_lite::{StreamExt, stream::repeat_with};
 
 pub async fn get_unique_path(
     path: &str,

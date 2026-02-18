@@ -12,14 +12,14 @@
 // You should have received a copy of the GNU Affero General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>
 
-use async_fs::{remove_file, rename, File};
+use async_fs::{File, remove_file, rename};
 use std::path::Path;
 
 use futures_lite::io;
 use log::Level;
-use trillium::{conn_try, conn_unwrap, Conn, Handler, State};
+use trillium::{Conn, Handler, State, conn_try, conn_unwrap};
 use trillium_forwarding::Forwarding;
-use trillium_logger::{apache_common, ColorMode, Logger, Target};
+use trillium_logger::{ColorMode, Logger, Target, apache_common};
 use trillium_router::{Router, RouterConnExt};
 
 use crate::common::get_unique_path;

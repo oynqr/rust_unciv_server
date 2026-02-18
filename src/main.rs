@@ -29,9 +29,9 @@ mod listener;
 #[cfg(test)]
 mod tests;
 
-use anyhow::{bail, Error};
+use anyhow::{Error, bail};
 use app::default_handler;
-use async_fs::{remove_file, File};
+use async_fs::{File, remove_file};
 use clap::Parser;
 use cmd::Args;
 use common::get_unique_path;
